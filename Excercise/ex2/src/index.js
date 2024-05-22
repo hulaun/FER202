@@ -1,21 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import MyButton from "./MyButton";
+import Company from "./Companies";
 
-const companies = [
-  { name: "Company One", category: "Finance", start: 1981, end: 2004 },
-  { name: "Company Two", category: "Retail", start: 1992, end: 2008 },
-  { name: "Company Three", category: "Auto", start: 1999, end: 2007 },
-  { name: "Company Four", category: "Retail", start: 1989, end: 2010 },
-  { name: "Company Five", category: "Technology", start: 2009, end: 2014 },
-  { name: "Company Six", category: "Finance", start: 1987, end: 2010 },
-  { name: "Company Seven", category: "Auto", start: 1986, end: 1996 },
-  { name: "Company Eight", category: "Technology", start: 2011, end: 2016 },
-  { name: "Company Nine", category: "Retail", start: 1981, end: 1989 },
-];
 const ChatRoom = [
   {
     id: "room1",
@@ -46,14 +37,60 @@ const ChatRoom = [
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <ul
+      class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm"
+      id="pillNav2"
+      role="tablist"
+    >
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active rounded-5 bg-info"
+          id="home-tab2"
+          data-bs-toggle="tab"
+          type="button"
+          role="tab"
+          aria-selected="true"
+        >
+          Home
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link rounded-5 text-white"
+          id="profile-tab2"
+          data-bs-toggle="tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+        >
+          Profile
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link rounded-5 text-white"
+          id="contact-tab2"
+          data-bs-toggle="tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+        >
+          Contact
+        </button>
+      </li>
+    </ul>
+    <div
+      class=" text-white border border-secondary shadow rounded-5 mx-2 my-1 px-2 py-4"
+      style={{ backgroundColor: "red" }}
+    >
+      This is a div element with a primary background color, white text, a
+      secondary border color, and a shadow.
+    </div>
+
     <MyButton />
-    {companies.map((company, index) => (
-      <div key={index}>
-        <p>
-          {company.name} {company.category} {company.start} {company.end}
-        </p>
-      </div>
-    ))}
+
+    <Company />
+
     {ChatRoom.map((chatRoom) => (
       <div>
         {chatRoom.name}
