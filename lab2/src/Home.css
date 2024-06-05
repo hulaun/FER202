@@ -1,0 +1,52 @@
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-img {
+  filter: brightness(1);
+}
+
+.card:hover {
+  animation: zoomIn 0.5s forwards; /* Apply the keyframe animation on hover */
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: #535C91; /* Use your color palette */
+  margin: 20px 0;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(1); /* Start at normal size */
+  }
+  to {
+    transform: scale(1.1); /* End at 10% larger */
+  }
+}
+.title {
+  text-align: center;
+  margin: 20px 0;
+  color: #9290C3;
+  font-size: 2em;
+}
+
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: rgba(0, 0, 0, 0.5); /* Optional: Dark overlay for better text contrast */
+}
+
+.card-title, .card-text {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 2px black; /* Optional: Add text shadow for better readability */
+}

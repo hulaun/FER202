@@ -1,0 +1,11 @@
+.footer {
+  background-color: #021b74; /* Use the specified color palette */
+}
+
+.footer a {
+  color: #0b0698; /* Lighter color for links */
+}
+
+.footer a:hover {
+  color: #535C91; /* Change color on hover */
+}
