@@ -24,12 +24,12 @@ const initialState = {
 
 const quizReducer = (state, action) => {
   switch (action.type) {
-    case 'SELECT_OPTION':
+    case 'SELECT':
       return {
         ...state,
         selectedOption: action.payload,
       };
-    case 'NEXT_QUESTION':
+    case 'NEXT':
       const isCorrect = state.questions[state.currentQuestion].answer === state.selectedOption;
       const nextQuestion = state.currentQuestion + 1;
       let newScore = state.score;
@@ -43,7 +43,7 @@ const quizReducer = (state, action) => {
         score: newScore,
         showScore: nextQuestion >= state.questions.length,
       };
-    case 'RESTART_QUIZ':
+    case 'RESTART':
       return initialState;
     default:
       return state;
@@ -54,15 +54,19 @@ function QuestionBank() {
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
   const handleOptionSelect = (option) => {
-    dispatch({ type: 'SELECT_OPTION', payload: option });
+    dispatch({ type: 'SELECT', payload: option });
   };
 
   const handleNextQuestion = () => {
-    dispatch({ type: 'NEXT_QUESTION' });
+    if(!state.selectedOption){
+      alert("Please choose one of the options")
+      return;
+    }
+    dispatch({ type: 'NEXT' });
   };
 
   const handleRestartQuiz = () => {
-    dispatch({ type: 'RESTART_QUIZ' });
+    dispatch({ type: 'RESTART' });
   };
 
   return (
@@ -76,9 +80,9 @@ function QuestionBank() {
         <div>
           <div>
             <div>{state.questions[state.currentQuestion].question}</div>
-            <ul style={{flexDirection: 'column',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <ul style={{gap:"0.2rem",flexDirection: 'column',display: 'flex', justifyContent: 'center', alignItems: 'start'}}>
               {state.questions[state.currentQuestion].options.map((option, index) => (
-                <li key={index} onClick={() => handleOptionSelect(option)} style={{listStyleType: 'none', width: "5rem",background: (state.selectedOption!==option)?"white":"red"}}>
+                <li key={index} onClick={() => handleOptionSelect(option)} style={{paddingLeft:"0.2rem",borderRadius: "2rem",border:"0.1rem solid black", listStyleType: 'number', width: "10rem", textAlign:"start",background: (state.selectedOption!==option)?"white":"green"}}>
                   {option}
                 </li>
               ))}

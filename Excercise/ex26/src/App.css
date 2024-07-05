@@ -1,0 +1,124 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  background-color: #ea8f2e;
+  text-align: center;
+}
+
+.navbar2 li {
+  text-decoration: none;
+  display: inline-block;
+  padding: 14px 16px;
+  color: white;
+  font-size: 20px;
+}
+
+.content {
+  text-align: center;
+}
+
+.content .subcontent1,
+.content .subcontent2 {
+  margin: 50px auto;
+}
+
+.subcontent1 p,
+.subcontent2 p {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.foot {
+  background-color: #f2ca81;
+  height: 100px;
+}
+
+.foot p {
+  color: white;
+  text-align: center;
+  padding-top: 35px;
+  font-size: 20px;
+}
+
+.addTask input {
+  display: inline-block;
+  margin-left: 20px;
+  width: 500px;
+}
+
+.addTask button {
+  display: inline-block;
+  margin-left: 20px;
+  width: 200px;
+  text-align: center;
+  background-color: #dc3546;
+  color: white;
+  border-radius: 5px;
+  border: #dc3546;
+}
+
+.toDoList {
+  background-color: #282c35;
+  height: 650px;
+}
+
+.list {
+  background-color: white;
+}
+
+.list h1 {
+  color: black;
+}
+
+.list button {
+  display: inline-block;
+  margin-left: 20px;
+  width: 200px;
+  text-align: center;
+  background-color: #dc3546;
+  color: white;
+  border-radius: 5px;
+  border: #dc3546;
+}
+
+.list li{
+  list-style: none;
+}
