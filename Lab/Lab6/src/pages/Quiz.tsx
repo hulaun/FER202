@@ -1,29 +1,87 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../rootReducer/store";
 import { selectQuestions } from "../rootReducer/selectors/quizSelectors";
-import { quizActions } from "../rootReducer/slices/quizSlice";
+import { quizActions, QuizItem } from "../rootReducer/slices/quizSlice";
 import { fetchQuestions } from "../rootReducer/apis/quizApis";
-import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import QuizResult from "./QuizResult";
+
+interface Option {
+    id: number;
+    option: string;
+}
+
+type QuizCompleteState = "true" | "false" | "idle";
+
 
 function Quiz() {
-
+    const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
     const quiz = useSelector(selectQuestions);
-
+    const [options, setOptions] = useState<Option[]>([]);
+    const [quizState, setQuizState] = useState<QuizCompleteState>("idle");
     useEffect(() => {
-        dispatch(quizActions.setLoading(true));
         fetchQuestions()
         .then((quizData:any) => {
             dispatch(quizActions.setQuestions(quizData)); // Assuming quizData is the array of news
-            dispatch(quizActions.setLoading(false));
         })
         .catch((error:any) => {
-            dispatch(quizActions.setError('Failed to fetch news'));
-            dispatch(quizActions.setLoading(false));
             console.error('Failed to fetch news:', error);
         });
     }, [dispatch]);
+
+    useEffect(() => {
+        if (quiz.length > 0) {
+            initOptions();
+        }
+    }, [quiz]);
+    
+    const initOptions=() => {
+        const newOptions = quiz.map((question:QuizItem) => {
+            return{
+                id: question.id, 
+                option: "",
+            }
+        });
+        setOptions([...newOptions]);
+    }
+
+    const handleChooseOption = (id: number, option: string) => {
+        const newOptions = options.map((opt) => {
+            if(opt.id === id){
+                if(opt.option === option){
+                    return {
+                        id: id,
+                        option: "",
+                    }
+                }
+                return {
+                    id: id,
+                    option: option,
+                }
+            }
+            return opt;
+        });
+        setOptions(newOptions);
+    }
+
+    const isChosen = (id: number, opt: string) => {
+        return options.some((option) => option.id === id && option.option === opt);
+    }
+
+    const handleSubmission = () => {
+        const isNotComplete = options.some((option)=>{
+            return option.option === ""
+        })
+        if(isNotComplete){
+            setQuizState("false");
+            return;
+        }
+        setQuizState("true");
+        
+        navigate('/result');
+    }
 
     return (
     <>
@@ -31,21 +89,31 @@ function Quiz() {
             <div className=" font-semibold text-4xl text-center translate-y-full">Quiz</div>
         </header>
         <ul className="p-7">
-            {quiz.map((question:any, index) => (
-                <li key={question.id}>
+            {quiz.map((question:QuizItem, index) => (
+                <li className="mb-3 rounded-md" key={question.id}>
                     <h3 className="p-2"><span className="font-semibold">Q.{index+1} </span>{question.question}</h3>
-                    <ul className="pb-5 grid grid-cols-2 gap-3">
-                        {question.options.map((option:any) => (
-                            <li className="bg-[#ecfeff] pl-3" key={option}>{option}</li>
+                    <ul className="grid grid-cols-2 gap-3">
+                        {question.options.map((option:string) => (
+                            <li onClick={()=>{handleChooseOption(question.id, option)}} className={`rounded-md border border-[#1144ff] pl-3 ${isChosen(question.id, option)?"bg-[#ecfeff]":""}`} key={option}>{option}</li>
                         ))}
                     </ul>
                 </li>
             ))}
         </ul>
-        {/* <Routes>
-            <Route path="result" element={<Result />} />
-            <Route path="review" element={<Review />} />
-        </Routes> */}
+        <div className="text-center relative">
+            {quizState === "false" && (
+                <p className="text-red-500 absolute left-1/2" style={{ transform: "translate(-50%, -100%)" }}>
+                    Please complete the quiz
+                </p>
+            )}
+            <button onClick={handleSubmission} className="bg-[#1144ff] text-white p-2 rounded-md w-36">
+                Submit
+            </button>
+        </div>
+        <Routes>
+            <Route path="result" element={<QuizResult options={options} />} />
+            {/* <Route path="review" element={<Review />} /> */}
+        </Routes>
     </>);
 }
 

@@ -9,14 +9,10 @@ export interface QuizItem {
 
 export interface QuizState {
   questions: QuizItem[];
-  loading: boolean;
-  error: string | null;
 }
 
 const initialState: QuizState = {
   questions: [],
-  loading: false,
-  error: null,
 };
 
 export const quizSlice = createSlice({
@@ -28,12 +24,6 @@ export const quizSlice = createSlice({
     },
     addQuestion: (state, action: PayloadAction<QuizItem>) => {
       state.questions.push(action.payload);
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
     },
     // You can add more reducers here as needed
   },

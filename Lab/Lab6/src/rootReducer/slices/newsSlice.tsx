@@ -9,14 +9,10 @@ export interface NewsItem {
 
 export interface NewsState {
   news: NewsItem[];
-  loading: boolean;
-  error: string | null;
 }
 
 const initialState: NewsState = {
   news: [],
-  loading: false,
-  error: null
 };
 
 export const newsSlice = createSlice({
@@ -25,12 +21,6 @@ export const newsSlice = createSlice({
   reducers: {
     setNews: (state, action: PayloadAction<NewsItem[]>) => {
       state.news = action.payload;
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
     },
     // Other reducers...
   },

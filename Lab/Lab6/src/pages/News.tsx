@@ -11,15 +11,11 @@ function News() {
 
 
   useEffect(() => {
-    dispatch(newsActions.setLoading(true));
     fetchNews()
       .then((newsData:any) => {
         dispatch(newsActions.setNews(newsData)); // Assuming newsData is the array of news
-        dispatch(newsActions.setLoading(false));
       })
       .catch((error:any) => {
-        dispatch(newsActions.setError('Failed to fetch news'));
-        dispatch(newsActions.setLoading(false));
         console.error('Failed to fetch news:', error);
       });
   }, [dispatch]);
