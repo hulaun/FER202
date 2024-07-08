@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../rootReducer/store";
 import { selectQuestions } from "../rootReducer/selectors/quizSelectors";
-import { quizActions, QuizItem } from "../rootReducer/slices/quizSlice";
+import { setQuestions, QuizItem } from "../rootReducer/slices/quizSlice";
 import { fetchQuestions } from "../rootReducer/apis/quizApis";
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ function Quiz() {
     useEffect(() => {
         fetchQuestions()
         .then((quizData:any) => {
-            dispatch(quizActions.setQuestions(quizData)); // Assuming quizData is the array of news
+            dispatch(setQuestions(quizData)); // Assuming quizData is the array of news
         })
         .catch((error:any) => {
             console.error('Failed to fetch news:', error);
