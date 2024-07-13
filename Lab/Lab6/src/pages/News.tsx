@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNews} from '../rootReducer/apis/newsApis'; // Adjust the import path as necessary
+import { fetchNews} from '../rootReducer/apis/newsApis';
 import { selectNews} from '../rootReducer/selectors/newsSelectors';
 import { AppDispatch } from '../rootReducer/store';
 import { newsActions } from '../rootReducer/slices/newsSlice';
@@ -13,7 +13,7 @@ function News() {
   useEffect(() => {
     fetchNews()
       .then((newsData:any) => {
-        dispatch(newsActions.setNews(newsData)); // Assuming newsData is the array of news
+        dispatch(newsActions.setNews(newsData));
       })
       .catch((error:any) => {
         console.error('Failed to fetch news:', error);

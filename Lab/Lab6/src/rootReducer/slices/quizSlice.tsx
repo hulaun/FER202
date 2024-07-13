@@ -16,13 +16,13 @@ export interface QuizItem {
 
 export interface QuizState {
   questions: QuizItem[];
-  options: Option[];
+  optionsSelected: Option[];
   quizState: QuizCompleteState;
 }
 
 const initialState: QuizState = {
   questions: [],
-  options: [],
+  optionsSelected: [],
   quizState: "idle",
 };
 
@@ -33,8 +33,25 @@ export const quizSlice = createSlice({
     setQuestions: (state, action: PayloadAction<QuizItem[]>) => {
       state.questions = action.payload;
     },
-    setOptions: (state, action: PayloadAction<Option[]>) => {
-      state.options = action.payload;
+    setOptionsSelected: (state) => {
+      state.optionsSelected = state.questions.map((question) => {
+        return {
+          id: question.id,
+          option: "",
+        };
+      })
+    },
+    setOption: (state, action: PayloadAction<Option>) => {
+      state.optionsSelected = state.optionsSelected.map((option) => {
+        if (option.id === action.payload.id) {
+          return (
+            action.payload.option === option.option
+            ? {id: option.id, option: ""}
+            : action.payload
+          );
+        }
+        return option;
+      });
     },
     setQuizState: (state, action: PayloadAction<QuizCompleteState>) => {
       state.quizState = action.payload;
@@ -43,6 +60,6 @@ export const quizSlice = createSlice({
   },
 });
 
-export const { setQuestions, setOptions, setQuizState } = quizSlice.actions;
+export const { setQuestions, setOptionsSelected, setQuizState, setOption } = quizSlice.actions;
 
 export default quizSlice.reducer;
